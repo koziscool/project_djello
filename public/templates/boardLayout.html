@@ -22,7 +22,7 @@
         <ul class="dropdown-menu dropdown-menu-center">
           <li ng-repeat="board in boards | orderBy:'created_at'">
               <div ng-click="selectBoard(board)">
-                <a href="#">{{board.title}}</a>
+                <a ui-sref="board.lists">{{board.title}}</a>
               </div>
           </li>
         </ul>
