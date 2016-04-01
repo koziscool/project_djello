@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+#
+User.delete_all
+
+puts 'Creating User seeds'
+20.times do |index|
+  User.create(email: Faker::Internet.email, password: "12345678")
+end 
+User.create(email: "deepakackar@gmail.com", password: "12345678")
+User.create(email: "foobar@gmail.com", password: "12345678")
