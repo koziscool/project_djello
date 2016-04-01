@@ -3,9 +3,9 @@ var djelloApp = angular.module("djelloApp", ['ui.router', 'ui.bootstrap', 'Devis
 .config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
   function($urlRouterProvider, $stateProvider, RestangularProvider){
 
-   AuthProvider.registerPath('path/on/server.json');
-   AuthProvider.registerMethod('GET');
-   AuthProvider.resourceName('user');
+   // AuthProvider.registerPath('path/on/server.json');
+   // AuthProvider.registerMethod('GET');
+   // AuthProvider.resourceName('user');
 
    RestangularProvider.setBaseUrl('/api/v1');
    RestangularProvider.setRequestSuffix('.json');
@@ -14,17 +14,18 @@ var djelloApp = angular.module("djelloApp", ['ui.router', 'ui.bootstrap', 'Devis
 
    });
 
-   // $stateProvider
-   //    .state('pins', {
-   //      url: '/pins',
-   //      abstract: true,
-   //      views: {
-   //       '': {
-   //          url: '',
-   //          templateUrl: '/templates/pinsLayout.html'
-   //        }
-   //      }
-   //    })
+   $stateProvider
+      .state('board', {
+        url: '/board',
+        templateUrl: '/templates/boardLayout.html',
+        controller: 'BoardCtrl'
+        resolve: {
+          pins: ['Restangular', function(Restangular){
+          return Restangular.all('boards').getList().$object;
+        }]
+  
+        }
+      })
    //   .state('pins.index',{
    //     url: '',
    //     templateUrl: '/templates/pinsIndex.html',
