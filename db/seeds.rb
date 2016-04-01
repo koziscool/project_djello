@@ -23,16 +23,20 @@ User.create(email: "foobar@gmail.com", password: "12345678")
 puts 'Creating Boards and Lists and Cards'
 
 5.times do |index| 
- Board.create(title: "Board Title #{index+1}") 
- 5.times do |list_index|
-   List.create(title: "List Title #{index+1} - #{list_index+1}", board_id: index+1) 
-   5.times do |card_index| 
+  Board.create(title: "Board Title #{index+1}") 
+  5.times do |list_index|
+   List.create(
+    title: Faker::Book.title,
+    description: Faker::Lorem.paragraph, 
+    board_id: index+1
+  ) 
+  5.times do |card_index| 
       Card.create(
-        title: "Card Title #{list_index+1} - #{card_index+1}",
+        title: Faker::Book.title,
         list_id: list_index+1, 
-        description: "Foo Bar #{list_index+1} - #{card_index+1}", 
+        description: Faker::Lorem.paragraph, 
         priority: card_index+1,
-        completed: false)
+        completed: [true, false].sample )
    end  
  end 
 end
