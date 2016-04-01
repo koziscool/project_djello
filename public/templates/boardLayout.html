@@ -11,6 +11,8 @@
   </div>  
 </nav>
 
+{{ currentBoard.title }}
+
 <div class="col-md-2 col-lg-2 side-bar">
   <div class="dropdown">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -30,9 +32,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-2">
-      <div ng-repeat="list in currentBoard" show-list list="list"></div>
-    </div>  
+    <div ng-repeat="list in currentBoard.lists" show-list list="list"></div>
   </div>  
 </div>
 

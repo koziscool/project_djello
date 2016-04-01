@@ -10,11 +10,11 @@ djelloApp.controller('BoardCtrl', ['boardService', 'listService', '$scope', '$st
   $scope.lists = listService.getBoardLists();
 
   console.log($scope.currentBoard);
+  console.log($scope.currentBoard.lists[0]);
 
 
   $scope.selectBoard = function(boardObj) {
     $scope.currentBoard = $scope.boards[$scope.boards.indexOf(boardObj)];
-
     listService.populateboardLists($scope.currentBoard );
 
     $scope.lists = listService.getBoardLists();
