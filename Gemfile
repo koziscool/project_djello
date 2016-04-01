@@ -14,6 +14,11 @@ gem 'angularjs-rails'
 gem 'angular_rails_csrf'
 gem 'faker'
 gem 'better_errors'
+gem 'devise'
+
+source "https://rails-assets.org" do
+  gem "rails-assets-angular-devise"
+end
 
 group :development, :test do
   gem 'byebug'
@@ -26,7 +31,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
-  #gem 'devise'
 end
 
 group :development do

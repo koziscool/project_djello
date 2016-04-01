@@ -18,4 +18,7 @@
 
 //= require restangular.min.js
 //= require angular-ui-router.min.js
+
+//= require angular-devise
+
 //= require_tree .
