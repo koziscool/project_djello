@@ -12,9 +12,12 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'angularjs-rails'
 gem 'angular_rails_csrf'
+gem 'faker'
+gem 'better_errors'
 
 group :development, :test do
   gem 'byebug'
+  gem 'pry-byebug'
   gem 'hirb'
   gem 'rspec-rails'
   gem 'guard'

@@ -41,6 +41,10 @@ GEM
       rails (>= 3, < 5)
     angularjs-rails (1.5.0)
     arel (6.0.3)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
@@ -71,6 +75,8 @@ GEM
     factory_girl_rails (4.6.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    faker (1.6.3)
+      i18n (~> 0.5)
     ffi (1.9.10)
     formatador (0.2.5)
     globalid (0.3.6)
@@ -127,6 +133,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.3.0)
+      byebug (~> 8.0)
+      pry (~> 0.10)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -222,11 +231,13 @@ PLATFORMS
 DEPENDENCIES
   angular_rails_csrf
   angularjs-rails
+  better_errors
   byebug
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
   factory_girl_rails
+  faker
   guard
   guard-rspec
   hirb
@@ -234,6 +245,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   pg (~> 0.15)
+  pry-byebug
   rails (= 4.2.5.1)
   rspec-rails
   sass-rails (~> 5.0)
