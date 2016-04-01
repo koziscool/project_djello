@@ -11,26 +11,28 @@
   </div>  
 </nav>
 
+<div class="col-md-2 col-lg-2 side-bar">
+  <div class="dropdown">
+    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+            Your Boards
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-center">
+      <li ng-repeat="board in boards | orderBy:'created_at'">
+          <div ng-click="selectBoard(board)">
+            <a ui-sref="board">{{board.title}}</a>
+          </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
 <div class="container">
   <div class="row">
-    <div class="col-md-2 col-lg-2 side-bar">
-      <div class="dropdown">
-        <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                Your Boards
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-center">
-          <li ng-repeat="board in boards | orderBy:'created_at'">
-              <div ng-click="selectBoard(board)">
-                <a ui-sref="board">{{board.title}}</a>
-              </div>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-    <div class="col-md-10 col-lg-10">
-      <div ui-view> </div>
+    <div class="col-xs-2">
+      <div ng-repeat="list in currentBoard" show-list list="list"></div>
     </div>  
   </div>  
 </div>
+

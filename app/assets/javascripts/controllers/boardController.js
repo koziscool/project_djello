@@ -2,7 +2,7 @@
 djelloApp.controller('BoardCtrl', ['boardService', 'listService', '$scope', '$stateParams', 'allBoards', function( boardService, listService, $scope, $stateParams, allBoards){
 
   $scope.boards = allBoards; 
-  $scope.currentBoard = allBoards[0];
+  $scope.currentBoard = allBoards[2];
 
   listService.populateboardLists($scope.currentBoard);
 

@@ -1,11 +1,9 @@
-list.directive('showList', [ function() {
+djelloApp.directive('showList', [ function() {
   // console.log('stock display directive');
   var def = {
     restrict: 'A',
     scope: {
-      pin: '=',
-      flip: '&',
-      delete: '&'
+      list: '=',
     },
     templateUrl: 'templates/directives/listLayout.html',
   };
