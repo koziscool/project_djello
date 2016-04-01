@@ -18,12 +18,14 @@ user = User.create(email: Faker::Internet.email, password: "12345678")
 
 5.times do 
   board = user.boards.build(title: Faker::Book.title) 
+  board.save
   5.times do
     list = board.lists.build(
       title: Faker::Book.title,
       description: Faker::Lorem.paragraph 
     ) 
-    5.times do 
+    list.save
+    5.times do |card_index|
       card = list.cards.create(
         title: Faker::Book.title,
         description: Faker::Lorem.paragraph, 
@@ -32,9 +34,7 @@ user = User.create(email: Faker::Internet.email, password: "12345678")
       )
       card.save
     end  
-    list.save
   end 
-  board.save
 end
 
 
