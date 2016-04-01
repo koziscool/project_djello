@@ -21,16 +21,16 @@ var djelloApp = angular.module("djelloApp", ['ui.router', 'restangular'] )
           }]
         }
       })
-      .state('board.lists', {
-        url: '/lists',
-        templateUrl: '/templates/listLayout.html',
-        controller: 'ListCtrl',
-        // resolve: {
-        //   allLists: ['Restangular', function(Restangular){
-        //       return Restangular.all('boards').getList();
-        //   }]
-        // }
-      })      
+      // // .state('board.lists', {
+      // //   url: '/lists',
+      // //   templateUrl: '/templates/listLayout.html',
+      //   controller: 'ListCtrl',
+      //   // resolve: {
+      //   //   allLists: ['Restangular', function(Restangular){
+      //   //       return Restangular.all('boards').getList();
+      //   //   }]
+      //   // }
+      // })      
    //   .state('pins.index',{
    //     url: '',
    //     templateUrl: '/templates/pinsIndex.html',
