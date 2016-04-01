@@ -17,21 +17,32 @@ ActiveRecord::Schema.define(version: 20160401162310) do
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
+    t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "card_members", force: :cascade do |t|
+    t.integer  "card_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "cards", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "list_id"
+    t.integer  "priority"
+    t.boolean  "completed",      null: false
+    t.date     "completed_date"
+    t.string   "title",          null: false
+    t.string   "description"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "lists", force: :cascade do |t|
+    t.integer  "board_id"
+    t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
