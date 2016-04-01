@@ -12,38 +12,35 @@ List.delete_all
 Card.delete_all
 CardMember.delete_all
 
-puts 'Creating User seeds'
+puts 'Creating seeds'
+
+user = User.create(email: Faker::Internet.email, password: "12345678")
+
+5.times do 
+  board = user.boards.build(title: Faker::Book.title) 
+  5.times do
+    list = board.lists.build(
+      title: Faker::Book.title,
+      description: Faker::Lorem.paragraph 
+    ) 
+    5.times do 
+      card = list.cards.create(
+        title: Faker::Book.title,
+        description: Faker::Lorem.paragraph, 
+        priority: card_index+1,
+        completed: [true, false].sample 
+      )
+      card.save
+    end  
+    list.save
+  end 
+  board.save
+end
+
+
 20.times do |index|
   User.create(email: Faker::Internet.email, password: "12345678")
 end 
 User.create(email: "deepakackar@gmail.com", password: "12345678")
 User.create(email: "foobar@gmail.com", password: "12345678")
 
-
-puts 'Creating Boards and Lists and Cards'
-
-5.times do |index| 
-  Board.create(title: "Board Title #{index+1}") 
-  5.times do |list_index|
-   List.create(
-    title: Faker::Book.title,
-    description: Faker::Lorem.paragraph, 
-    board_id: index+1
-  ) 
-  5.times do |card_index| 
-      Card.create(
-        title: Faker::Book.title,
-        list_id: list_index+1, 
-        description: Faker::Lorem.paragraph, 
-        priority: card_index+1,
-        completed: [true, false].sample )
-   end  
- end 
-end
-
-
-puts 'Creating Card Members'
-
-# 5.times do |index|
-
-# end  
