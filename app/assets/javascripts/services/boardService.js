@@ -1,5 +1,5 @@
 
-pinBoard.factory('pinService', ['Restangular', function(Restangular){
+djelloApp.factory('boardService', ['Restangular', function(Restangular){
 
     var obj = {};
     obj.index = [];
