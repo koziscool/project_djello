@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+ul.dropdown-menu {
+    background-color: cyan;
+}
+
+.side-bar {
+  border-right: 1px dashed #333;
