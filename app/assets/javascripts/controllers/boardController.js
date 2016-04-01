@@ -1,8 +1,8 @@
 
-djelloApp.controller('BoardCtrl', ['boardService', '$scope',  '$stateParams',function(boardService, $scope, $stateParams){
+djelloApp.controller('BoardCtrl', ['boardService', '$scope',  '$stateParams', 'allBoards', function( boardService, $scope, $stateParams, allBoards){
 
-  boardService.getIndex();
-  $scope.boards = boardService.index;
-  $scope.currentBoard = $scope.boards[0];
+  console.log( allBoards );
+  $scope.currentBoard = allBoards[0];
+  console.log($scope.currentBoard);
 
 }]);

@@ -1,5 +1,5 @@
 
-var djelloApp = angular.module("djelloApp", ['ui.router', 'ui.bootstrap', 'restangular'] )
+var djelloApp = angular.module("djelloApp", ['ui.router', 'restangular'] )
 
 .config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
   function($urlRouterProvider, $stateProvider, RestangularProvider){
@@ -14,7 +14,12 @@ var djelloApp = angular.module("djelloApp", ['ui.router', 'ui.bootstrap', 'resta
       .state('board', {
         url: '/board',
         templateUrl: '/templates/boardLayout.html',
-        controller: 'BoardCtrl'
+        controller: 'BoardCtrl',
+        resolve: {
+          allBoards: ['Restangular', function(Restangular){
+              return Restangular.all('boards').getList();
+          }]
+        }
       })
    //   .state('pins.index',{
    //     url: '',

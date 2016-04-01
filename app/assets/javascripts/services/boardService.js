@@ -4,7 +4,7 @@ djelloApp.factory('boardService', ['Restangular', function(Restangular){
     var obj = {};
     obj.index = [];
     obj.getindex = function(){
-        var idx = Restangular.all("boards").getList().then(function(data){
+        return Restangular.all("boards").getList().then(function(data){
             obj.index = data;
         });
     };
