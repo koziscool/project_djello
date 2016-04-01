@@ -1,0 +1,2 @@
+module SpangularHelper
+end
