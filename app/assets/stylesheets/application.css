@@ -33,3 +33,12 @@ ul.dropdown-menu {
   margin: 18px 0;
 }
 
+.list-class:hover {
+    border: solid; 
+    float: left;
+    background-color: #ccffff;
+}
+
+.do-center {
+  text-align: center;
+}

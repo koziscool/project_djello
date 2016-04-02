@@ -1,14 +1,17 @@
 
-var djelloApp = angular.module("djelloApp", ['ui.router', 'restangular'] )
+var djelloApp = angular.module("djelloApp", ['ui.router', 'Devise', 'restangular'] );
 
-.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
-  function($urlRouterProvider, $stateProvider, RestangularProvider){
+djelloApp.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider', 'AuthProvider',
+  function($urlRouterProvider, $stateProvider, RestangularProvider, AuthProvider){
 
-   RestangularProvider.setBaseUrl('/api/v1');
-   RestangularProvider.setRequestSuffix('.json');
-   RestangularProvider.setDefaultHttpFields({
-       "content-type": "application/json"
-   });
+     RestangularProvider.setBaseUrl('/api/v1');
+     RestangularProvider.setRequestSuffix('.json');
+     RestangularProvider.setDefaultHttpFields({
+         "content-type": "application/json"
+     });
+     AuthProvider.loginPath('api/v1/users/sign_in.json');
+     AuthProvider.logoutPath('api/v1/users/sign_out.json');
+
 
    $stateProvider
       .state('board', {
@@ -21,50 +24,11 @@ var djelloApp = angular.module("djelloApp", ['ui.router', 'restangular'] )
           }]
         }
       })
-      // // .state('board.lists', {
-      // //   url: '/lists',
-      // //   templateUrl: '/templates/listLayout.html',
-      //   controller: 'ListCtrl',
-      //   // resolve: {
-      //   //   allLists: ['Restangular', function(Restangular){
-      //   //       return Restangular.all('boards').getList();
-      //   //   }]
-      //   // }
-      // })      
-   //   .state('pins.index',{
-   //     url: '',
-   //     templateUrl: '/templates/pinsIndex.html',
-   //     controller: 'pinsIndexCtrl',
-   //     resolve: {
-   //       pins: ['Restangular', function(Restangular){
-   //         return Restangular.all('pins').getList().$object;
-   //       }]
-   //     }
-   //   })
-   //   .state('pins.show', {
-   //     url: "/:id",
-   //     templateUrl: '/templates/pinShow.html',
-   //     params: {
-   //      pinObj: null,
-   //      id: null
-   //    },
-   //    controller: 'pinShowCtrl'
-   //   })
-   //   .state('pins.edit', {
-   //     url: "/:id/edit",
-   //     templateUrl: '/templates/pinEdit.html',
-   //     params: {
-   //      pinObj: null,
-   //      id: null
-   //    },
-   //    controller: 'pinEditCtrl'
-   //   })
-   //   ;
 
      $urlRouterProvider.otherwise('/board');
 
  }]);
 
-// .run(function($rootScope){
-//  $rootScope.$on("$stateChangeError", console.log.bind(console));
-// });
+djelloApp.run(function($rootScope){
+ $rootScope.$on("$stateChangeError", console.log.bind(console));
+});

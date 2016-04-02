@@ -17,6 +17,7 @@ class BoardsController < ApplicationController
     @board = Board.new( board_params )
     if @board.save
       respond_to do |format|
+        puts "Board is #{@board.id}"
         format.json {render json: @board.to_json(include: :lists)}
       end
     end
@@ -50,7 +51,7 @@ class BoardsController < ApplicationController
 
   private
   def board_params
-    params.require(:board).permit(:id, :title )
+    params.require(:board).permit(:id, :title, :user_id )
   end  
 
 end
