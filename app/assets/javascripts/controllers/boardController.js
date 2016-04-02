@@ -1,5 +1,5 @@
 
-djelloApp.controller('BoardCtrl', ['boardService', 'listService', '$scope', '$stateParams', 'allBoards', function( boardService, listService, $scope, $stateParams, allBoards){
+djelloApp.controller('BoardCtrl', ['Restangular', 'boardService', 'listService', '$scope', '$stateParams', 'allBoards', function( Restangular, boardService, listService, $scope, $stateParams, allBoards){
 
   $scope.boards = allBoards; 
   $scope.currentBoard = allBoards[0];
@@ -19,21 +19,24 @@ djelloApp.controller('BoardCtrl', ['boardService', 'listService', '$scope', '$st
     listService.populateboardLists($scope.currentBoard );
 
     $scope.lists = listService.getBoardLists();
-    
-    console.log("Selected Lists");
-    console.log($scope.lists);
-      
-    console.log("In Checking");
-    console.log($scope.lists[0].cards);
-    //$scope.populateListCards;
+  
   }
 
-  $scope.populateListCards = function() {
-    for ( var i = 0; i < $scope.lists.length ; i++) {
-      key = $scope.list[i].id;
-      $scope.list_cards[key] =  $scope.list[i].cards;
-    }
-    console.log("In here");
-    console.log($scope.list_cards);
-  }  
+  $scope.createBoard = function() {
+    console.log("Board Created");
+  }
+
+  $scope.deleteBoard = function(boardObj) {
+ 
+     Restangular.one("boards/" + boardObj.id).remove().then(
+       function(res)  {
+          $scope.boards.splice($scope.boards.indexOf(boardObj), 1);
+          console.log("Board Deleted");
+       },
+       function(res)  {
+        console.log("Board NOT Deleted");
+     }      
+    ) 
+  }
+
 }]);

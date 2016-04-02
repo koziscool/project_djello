@@ -17,5 +17,19 @@ ul.dropdown-menu {
     background-color: cyan;
 }
 
-.side-bar {
-  border-right: 1px dashed #333;
+.list-border {
+  border: 1px dashed #333;
+}
+
+.hr-line {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: red -moz-use-text-color red;
+  border-style: solid none;
+  border-width: 2px 0;
+  margin: 18px 0;
+}
+
