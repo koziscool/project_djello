@@ -14,6 +14,7 @@
   </nav>
 
   <h3 class="text-center"> {{ currentBoard.title }} </h3>
+  
   <div class="text-center">
     <button class="btn btn-info btn-sm" type="button" data-toggle="modal" 
             data-target="#listModal">
@@ -22,6 +23,7 @@
     <br><br>
     <!--- Modal -->
   </div> 
+
   <div class="modal fade" id="listModal" tabindex="-1" role="dialog" 
        aria-labelledby="listModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -43,7 +45,7 @@
           
           <form class="form-horizontal" name="listForm" role="form">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="board-title">Name</label>
+              <label class="col-sm-2 control-label" for="list-title">Name</label>
               <div class="col-sm-10">
                 <input type="text" ng-model="list_title" class="form-control" 
                        id="list-title" name="list_title" ng-required="true"
@@ -93,7 +95,7 @@
       </div>
 
       <div class="modal fade" id="boardModal" tabindex="-1" role="dialog" 
-           aria-labelledby="myModalLabel" aria-hidden="true">
+           aria-labelledby="boardModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
           
@@ -103,7 +105,7 @@
                      <span aria-hidden="true">&times;</span>
                      <span class="sr-only">Close</span>
               </button>
-              <h4 class="modal-title" id="myModalLabel">
+              <h4 class="modal-title" id="boardModalLabel">
                   New Board
               </h4>
             </div>
@@ -138,9 +140,11 @@
     </div>
 
     <div class="col-md-10 col-lg-10">
-      <div ng-repeat="list in currentBoard.lists" show-list list="list" add-card="addCard()" remove-list="removeList(list)"></div>
+      <div ng-repeat="list in currentBoard.lists" show-list list="list" add-card="addCard()" remove-list="removeList(list)"
+      new-card="newCard(list)"></div>
     </div>  
   </div>
 </div>
+
 <div ui-view></div>
 

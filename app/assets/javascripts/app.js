@@ -32,7 +32,9 @@ djelloApp.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
         url: '/card',
         templateUrl: '/templates/cardModalLayout.html',
         controller: 'CardCtrl',
-        params: { list_id: null},
+        params: {
+          list: null
+        },
         // resolve: {
         //   allCards: ['Restangular', function(Restangular){
         //     return Restangular.all('cardmembers').getList();

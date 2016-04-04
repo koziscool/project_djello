@@ -20,8 +20,8 @@
         
         <form class="form-horizontal" name="cardForm" role="form">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="card-title">Name</label>
-            <div class="col-sm-10">
+            <label class="col-sm-3 control-label" for="card-title">Name</label>
+            <div class="col-sm-9">
               <input type="text" ng-model="card_title" class="form-control" 
                      id="card-title" name="card_title" ng-required="true"
                      placeholder="<card title>"/>
@@ -29,28 +29,31 @@
           </div>
 
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="card-desc">Description</label>
-            <div class="col-sm-10">
+            <label class="col-sm-3 control-label" for="card-desc">Description</label>
+            <div class="col-sm-9">
               <input type="textarea" ng-model="card_description" class="form-control" 
-                     id="card-description" name="card_description" ng-required="true"
-                     placeholder="<card description>"/>
+                     id="card-description" name="card_description" ng-required="true" placeholder="<card description>"/>
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="card-desc">Add Members</label>
-            <br>
-            <div class="col-sm-10">
-              <input type="textarea" ng-model="card_description" class="form-control" 
-                     id="card-description" name="card_description" ng-required="true"
-                     placeholder="<card description>"/>
-            </div>
+          <div class="form-group">  
+            <label class="col-sm-3 control-label">Add Member</label>
+            <div class="col-sm-9">
+              <div>
+                <input type="text" ng-model="searchEmail" name="search-email"
+                       class="form-control">
+              </div>
+              <div>
+                <select class="form-control" multiple>
+                  <option ng-repeat="user in users | orderBy:'created_at' | filter:searchEmail" value="user.id">{{user.email}}</option>
+                </select>
+              </div>
+            </div>  
           </div>
 
 
         </form>
       </div>
-      
 
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" 

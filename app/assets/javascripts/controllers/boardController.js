@@ -1,17 +1,15 @@
 
-djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listService', '$scope', '$stateParams', 'allBoards', function( Restangular, Auth, boardService, listService, $scope, $stateParams, allBoards){
+djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listService', '$scope', '$stateParams', '$state', 'allBoards', function( Restangular, Auth, boardService, listService, $scope, $stateParams, $state, allBoards){
 
 
   $scope.boards = allBoards; 
+  $scope.users = [];
+  $scope.currentList = "";
+
   $scope.currentBoard = allBoards[0];
 
   listService.populateboardLists($scope.currentBoard);
 
-  console.log("Boards");
-  console.log(allBoards);
-  console.log($scope.currentBoard);
-
-  //$scope.lists = $scope.currentBoard.lists;
   $scope.lists = listService.getBoardLists();
   $scope.list_cards = {};
 
@@ -19,16 +17,15 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
 
   $scope.list_title = "";
   $scope.list_board_id = $scope.currentBoard.id
+ 
+  $scope.card_title = "";
+  $scope.card_description = "";
 
-  console.log($scope.currentBoard);
-  console.log($scope.currentBoard.lists[0]);
-  
   $scope.refreshBoard = function(boardIndex) {
     $scope.currentBoard = $scope.boards[boardIndex];
     listService.populateboardLists($scope.currentBoard);
     $scope.lists = listService.getBoardLists();
   }
-
 
   $scope.selectBoard = function(boardObj) {
     $scope.refreshBoard($scope.boards.indexOf(boardObj));
@@ -37,6 +34,7 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
   $scope.createBoard = function(boardValid) {
 
     var newBoard = {title: $scope.board_title, user_id: 1};
+   
     if (boardValid) {
       Restangular.all('boards').post(newBoard).then(
         function(response)  {
@@ -91,6 +89,17 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
        });
     }
     $scope.list_title = "";
+  }
+
+  $scope.newCard = function(listObj) {
+    //console.log("In Here");
+    Restangular.all('users').getList().then(
+      function(response)  {
+          $scope.users = response;
+          $scope.currentList = listObj;
+          $state.go("board.card");
+      }
+    ); 
   }
 
 }]);
