@@ -16,6 +16,11 @@ djelloApp.factory('listService', ['Restangular', function(Restangular){
       return boardLists;
     };
 
+    obj.addList = function(list) {
+      boardLists.push( list );
+      console.log('oklahoma');
+    };
+
     obj.createList = function(list) {
 
     };

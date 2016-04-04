@@ -1,26 +1,44 @@
 
-djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listService', '$scope', '$stateParams', '$state', 'allBoards', function( Restangular, Auth, boardService, listService, $scope, $stateParams, $state, allBoards){
+djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listService', '$scope', '$stateParams', '$state', 'allBoards', 'currentUser', function( Restangular, Auth, boardService, listService, $scope, $stateParams, $state, allBoards, currentUser){
 
-  boardService.populateBoards(allBoards);
 
-  $scope.boards       = boardService.getBoards(); 
+  // console.log('all boards');
+  // console.log(allBoards);
+
+  // console.log('current user');
+  // console.log(currentUser);
+
+  // boardService.populateBoards(allBoards);
+
+  $scope.boards = boardService.getBoards(); 
+  console.log('scope boards');
+  console.log($scope.boards);
+
   $scope.currentBoard = boardService.getCurrentBoard();
+
+  console.log( 'current board')
+  console.log( $scope.currentBoard );
   
-  listService.populateboardLists($scope.currentBoard);
-  $scope.lists = listService.getBoardLists();
+  if( $scope.currentBoard) {
 
-  $scope.users = [];
+    listService.populateboardLists($scope.currentBoard);
+    $scope.lists = listService.getBoardLists();
+    
+    console.log( 'current lists');
+    console.log($scope.lists);
 
-  $scope.currentList = "";
-  $scope.list_cards = {};
 
-  $scope.board_title = "";
+    $scope.currentList = "";
+    $scope.list_cards = {};
 
-  $scope.list_title = "";
-  $scope.list_board_id = $scope.currentBoard.id
- 
-  $scope.card_title = "";
-  $scope.card_description = "";
+    $scope.board_title = "";
+
+    $scope.list_title = "";
+    $scope.list_board_id = $scope.currentBoard.id
+   
+    $scope.card_title = "";
+    $scope.card_description = "";
+  }
 
   $scope.refreshBoard = function(boardIndex) {
     boardService.refreshBoard(boardIndex);
@@ -38,7 +56,10 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
    
     if (boardValid) {
       boardService.create(newBoard).then( function() {
+        console.log(' created ok');
         $scope.currentBoard = boardService.getCurrentBoard();
+        console.log( 'current board')
+        console.log( $scope.currentBoard );
         $scope.lists = listService.getBoardLists();
       });  
     }
@@ -76,6 +97,7 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
       Restangular.all('lists').post(newList).then(
         function(response)  {
           $scope.lists.push(response);
+          listService.addList(response);
           $scope.refreshBoard(index);
         },
         function(response)  {
