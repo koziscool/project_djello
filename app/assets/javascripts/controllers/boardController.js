@@ -22,14 +22,6 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
 
   console.log($scope.currentBoard);
   console.log($scope.currentBoard.lists[0]);
-
-  Auth.currentUser().then(function(user) {
-      // User was logged in, or Devise returned
-      // previously authenticated session.
-      console.log(user); // => {id: 1, ect: '...'}
-  }, function(error) {
-      // unauthenticated error
-  });
   
   $scope.refreshBoard = function(boardIndex) {
     $scope.currentBoard = $scope.boards[boardIndex];
@@ -37,9 +29,6 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
     $scope.lists = listService.getBoardLists();
   }
 
-  $scope.addCard = function() {
-    console.log("Add card");
-  }
 
   $scope.selectBoard = function(boardObj) {
     $scope.refreshBoard($scope.boards.indexOf(boardObj));

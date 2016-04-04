@@ -1,11 +1,11 @@
 class BoardsController < ApplicationController
 
   def index
-    @boards = Board.all.order('created_at DESC')
+    @boards = Board.all.order('created_at DESC').where("user_id = ?" ,current_user.id)
     respond_to do |format|
       #format.json {render json: @boards.to_json(include: :lists)}
+      #format.json {render json: @boards.to_json(:include => {:lists => {:include => :cards}})}
       format.json {render json: @boards.to_json(:include => {:lists => {:include => :cards}})}
-
     end
   end
 

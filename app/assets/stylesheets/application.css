@@ -36,7 +36,18 @@ ul.dropdown-menu {
 .list-class:hover {
     border: solid; 
     float: left;
-    background-color: #ccffff;
+    background-color: #ffffe6;
+}
+
+.list-background {
+  background-color: #e6e6e6;
+  border-radius: 10px;
+  margin:3px;
+}
+
+.card-background {
+  background-color: #F5FFFA;
+  border-radius: 10px;
 }
 
 .do-center {
