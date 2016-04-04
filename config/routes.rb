@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   devise_for :users
   root 'spangular#index'
 
-  devise_scope :user do
-    get "sign_in", to: "devise/sessions#new"
-    get "login", :to => "devise/sessions#new"
-    delete "sign_out", :to => "devise/sessions#destroy"
-    delete "logout", :to => "devise/sessions#destroy"
-  end
+  # devise_scope :user do
+  #   get "sign_in", to: "devise/sessions#new"
+  #   get "login", :to => "devise/sessions#new"
+  #   delete "sign_out", :to => "devise/sessions#destroy"
+  #   delete "logout", :to => "devise/sessions#destroy"
+  # end
 
   scope :api do
     scope :v1 do

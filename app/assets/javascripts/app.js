@@ -10,9 +10,6 @@ djelloApp.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
          "content-type": "application/json"
      });
 
-     AuthProvider.loginPath('/api/v1/users/sign_in.json');
-     AuthProvider.logoutPath('/api/v1/users/sign_out.json');
-     AuthProvider.logoutMethod('DELETE');
 
    $stateProvider
       .state('board', {
@@ -20,9 +17,9 @@ djelloApp.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
         templateUrl: '/templates/boardLayout.html',
         controller: 'BoardCtrl',
         resolve: {
-          // currentUser: ['Auth', function(Auth) {
-          // return Auth.currentUser();
-          // }],
+          currentUser: ['Auth', function(Auth) {
+          return Auth.currentUser();
+          }],
           allBoards: ['Restangular', function(Restangular){
             return Restangular.all('boards').getList();
           }]
