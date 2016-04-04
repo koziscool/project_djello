@@ -12,8 +12,7 @@ djelloApp.controller('CardCtrl', ['boardService', 'listService', '$scope', '$sta
         list_id: $scope.currentList.id,
         completed: false
       }
-      
-      console.log(newCard);
+
       Restangular.all('cards').post(newCard).then(
         function(response)  {
           console.log("Card was added")

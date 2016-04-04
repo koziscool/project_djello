@@ -1,16 +1,17 @@
 
 djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listService', '$scope', '$stateParams', '$state', 'allBoards', function( Restangular, Auth, boardService, listService, $scope, $stateParams, $state, allBoards){
 
+  boardService.populateBoards(allBoards);
 
-  $scope.boards = allBoards; 
-  $scope.users = [];
-  $scope.currentList = "";
-
-  $scope.currentBoard = allBoards[0];
-
+  $scope.boards       = boardService.getBoards(); 
+  $scope.currentBoard = boardService.getCurrentBoard();
+  
   listService.populateboardLists($scope.currentBoard);
-
   $scope.lists = listService.getBoardLists();
+
+  $scope.users = [];
+
+  $scope.currentList = "";
   $scope.list_cards = {};
 
   $scope.board_title = "";
@@ -22,13 +23,13 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
   $scope.card_description = "";
 
   $scope.refreshBoard = function(boardIndex) {
-    $scope.currentBoard = $scope.boards[boardIndex];
-    listService.populateboardLists($scope.currentBoard);
+    boardService.refreshBoard(boardIndex);
+    $scope.currentBoard = boardService.getCurrentBoard();
     $scope.lists = listService.getBoardLists();
   }
 
   $scope.selectBoard = function(boardObj) {
-    $scope.refreshBoard($scope.boards.indexOf(boardObj));
+    $scope.refreshBoard(boardService.getIndexOfBoard(boardObj));
   }
 
   $scope.createBoard = function(boardValid) {
@@ -36,28 +37,18 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
     var newBoard = {title: $scope.board_title, user_id: 1};
    
     if (boardValid) {
-      Restangular.all('boards').post(newBoard).then(
-        function(response)  {
-          $scope.boards.unshift(response);
-          $scope.refreshBoard(0);
-        },
-        function(response)  {
-          alert("Could not add your board: " + board_title);
-       });
+      boardService.create(newBoard).then( function() {
+        $scope.currentBoard = boardService.getCurrentBoard();
+        $scope.lists = listService.getBoardLists();
+      });  
     }
   }
 
   $scope.deleteBoard = function(boardObj) {
-     Restangular.one("boards/" + boardObj.id).remove().then(
-       function(res)  {
-          index = $scope.boards.indexOf(boardObj)
-          $scope.boards.splice(index, 1);
-          $scope.refreshBoard(0);
-       },
-       function(res)  {
-        alert("Could not delete your board: " + boardObj.title);
-     }      
-    )
+    boardService.destroy(boardObj).then(function () {
+      $scope.currentBoard = boardService.getCurrentBoard();
+      $scope.lists = listService.getBoardLists();
+    });
   }
 
   $scope.removeList = function(listObj) {
@@ -75,7 +66,10 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
 
   $scope.addList = function(listValid) {
 
-    var newList = {title: $scope.list_title, board_id: $scope.currentBoard.id};
+    var newList = {title: $scope.list_title, 
+                   board_id: $scope.currentBoard.id
+                  };
+
     var index = $scope.boards.indexOf($scope.currentBoard);
 
     if (listValid) {
@@ -102,4 +96,14 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
     ); 
   }
 
+  $scope.removeCard = function(cardObj) {
+    console.log("Here");
+    Restangular.one("cards/" + cardObj.id).remove().then(
+      function(res)  {
+        console.log("Card deleted");
+      },
+      function(res)  {
+        alert("Could not delete your card: " + cardObj.title);
+      })
+  }
 }]);

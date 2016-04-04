@@ -8,7 +8,8 @@
   </h5>
   </br>
   <!--<p>{{ list['description']}}</p>-->
-  <div ng-repeat="card in list.cards" show-card card="card"> 
+  <div ng-repeat="card in list.cards" show-card card="card"
+       remove-card="removeCard(card)">
   </div>
   <br>
 

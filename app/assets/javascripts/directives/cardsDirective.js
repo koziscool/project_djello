@@ -1,12 +1,12 @@
 
 djelloApp.directive('showCard', [ function() {
   // console.log('stock display directive');
-  var def = {
-    restrict: 'A',
+  return {
+    restrict: 'AE',
     scope: {
       card: '=',
+      removeCard: '&',
     },
     templateUrl: 'templates/directives/cardLayout.html',
   };
-  return def;
 }]);

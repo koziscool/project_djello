@@ -2,14 +2,26 @@
 djelloApp.factory('listService', ['Restangular', function(Restangular){
 
     var obj = {};
-    obj.boardlists;
+    var currentList;
+    var boardLists = [];
 
     obj.populateboardLists = function(boardObj){
-        obj.boardLists = boardObj.lists;
+      boardLists.splice(0,boardLists.length);
+      for (var i = 0; i < boardObj.lists.length; i++) {
+        boardLists.push(boardObj.lists[i]);
+      }
     };
 
-    obj.getBoardLists= function(){
-        return obj.boardLists;
+    obj.getBoardLists = function(){
+      return boardLists;
+    };
+
+    obj.createList = function(list) {
+
+    };
+
+    obj.removeList = function(list) {
+      
     };
 
     return obj;
