@@ -1,7 +1,7 @@
 
 <div class="card-background">
   <h5><em><strong>{{ card['title']}}</strong></em>
-   <button class="btn btn-xs pull-right" type="button" ng-click="removeCard()">
+   <button class="btn btn-xs pull-right" type="button" ng-click="removeCard( {card: card} )">
     <img src="assets/erase.png" class="pull-right delete-card-icon">
   </button>
 </h5>

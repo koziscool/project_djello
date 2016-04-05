@@ -32,16 +32,8 @@ djelloApp.controller('BoardCtrl', ['dataService', '$scope', '$stateParams', '$st
   }
 
   $scope.removeList = function(listObj) {
-   console.log("In delete list") ;
-    Restangular.one("lists/" + listObj.id).remove().then(
-      function(res)  {
-          $scope.lists.splice($scope.lists.indexOf(listObj), 1);
-          alert("Deleted your list: " + listObj.title);
-      },
-       function(res)  {
-        alert("Could not delete your list: " + listObj.title);
-      }
-    )
+    console.log("In delete list");
+    dataService.deleteList(listObj);
   }
 
   $scope.addList = function( listValid ) {
@@ -65,12 +57,6 @@ djelloApp.controller('BoardCtrl', ['dataService', '$scope', '$stateParams', '$st
 
   $scope.removeCard = function(cardObj) {
     console.log("Here");
-    Restangular.one("cards/" + cardObj.id).remove().then(
-      function(res)  {
-        console.log("Card deleted");
-      },
-      function(res)  {
-        alert("Could not delete your card: " + cardObj.title);
-      })
-  }
+    dataService.deleteCard(cardObj);
+  };
 }]);

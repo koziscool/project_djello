@@ -48,8 +48,27 @@ djelloApp.factory('dataService', ['Restangular', function(Restangular) {
        });;
     };
 
+
+    obj.deleteList = function( listObj ) {
+        delete _lists[listObj.id];
+        console.log(_currentBoard.lists.length);
+        _currentBoard.lists = _currentBoard.lists.filter( function(listItem){
+            return listItem.id !== listObj.id;
+        });
+        console.log(_currentBoard.lists.length);
+        Restangular.one("lists", listObj.id).remove().then(
+          function(res)  {
+              console.log("Deleted your list: " + listObj.title);
+          },
+           function(res)  {
+            alert("Could not delete your list: " + listObj.title);
+          }
+        )
+    };
+
+
     obj.addCard = function( cardObj ) {
-        var currentList = _lists[cardObj.list_id]
+        var currentList = _lists[cardObj.list_id];
         currentList.cards.push( cardObj );
         _cards[cardObj.id] = cardObj;
         obj.createCardToDB( cardObj, currentList );
@@ -64,6 +83,24 @@ djelloApp.factory('dataService', ['Restangular', function(Restangular) {
         function(response)  {
            alert("Could not add your card: " + cardObj.title + " to the list " + currentList.title);
        });
+    };
+
+    obj.deleteCard = function( cardObj ) {
+        var currentList = _lists[cardObj.list_id];
+        delete _cards[cardObj.id];
+        console.log(currentList.cards.length);
+        currentList.cards = currentList.cards.filter( function(cardItem){
+            return cardItem.id !== cardObj.id;
+        });
+        console.log(currentList.cards.length); 
+
+        Restangular.one("cards", cardObj.id).remove().then(
+          function(res)  {
+            console.log("Card deleted");
+          },
+          function(res)  {
+            alert("Could not delete your card: " + cardObj.title);
+          })
     };
 
     obj.getCurrentBoard = function() {
