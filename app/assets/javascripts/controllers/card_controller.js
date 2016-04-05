@@ -1,4 +1,4 @@
-djelloApp.controller('CardCtrl', ['boardService', '$scope', '$stateParams', function( boardService, $scope, $stateParams){
+djelloApp.controller('CardCtrl', ['dataService', '$scope', '$stateParams', function( dataService, $scope, $stateParams){
 
   $scope.card_title = "";
   $scope.card_description = "";
@@ -15,7 +15,7 @@ djelloApp.controller('CardCtrl', ['boardService', '$scope', '$stateParams', func
         list_id: $scope.currentList.id,
         completed: false
       }
-      boardService.addCard( newCard );
+      dataService.addCard( newCard );
       console.log( newCard);
       // Restangular.all('cards').post(newCard).then(
       //   function(response)  {

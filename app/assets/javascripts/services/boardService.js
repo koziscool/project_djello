@@ -1,27 +1,25 @@
 
-djelloApp.factory('boardService', ['Restangular', function(Restangular) {
+djelloApp.factory('dataService', ['Restangular', function(Restangular) {
 
     var obj = {};
-    var currentBoard;
-    var boards = {};
-    var lists = {};
-    var cards = {};
-
-    // obj.index = [];
+    var _currentBoard;
+    var _boards = {};
+    var _lists = {};
+    var _cards = {};
 
     obj.getIndex = function(){
-        if (boards.length){
-          return boards;
+        if (_boards.length){
+          return _boards;
         }
         return Restangular.all("boards").getList().then(function(boardData){
           boardData.forEach( function(boardObj){
-            boards[boardObj.id] = boardObj;
-            currentBoard = boardObj;
+            _boards[boardObj.id] = boardObj;
+            _currentBoard = boardObj;
 
             boardObj.lists.forEach( function(list){
-              lists[list.id] = list;
+              _lists[list.id] = list;
                 list.cards.forEach( function(card){
-                  cards[card.id] = card;
+                  _cards[card.id] = card;
                 });
             });
           });
@@ -29,16 +27,17 @@ djelloApp.factory('boardService', ['Restangular', function(Restangular) {
     };
 
     obj.getBoards = function() {
-       return boards;
+       return _boards;
     };
 
     obj.getLists = function() {
     }
 
     obj.addList = function( listObj ) {
-        currentBoard.lists.push( listObj );
+        _currentBoard.lists.push( listObj );
+        _lists[listObj.id] = listObj;
         // console.log('add list boardservice')
-        // console.log( currentBoard );
+        // console.log( _currentBoard );
         obj.createListToDB( listObj );
     };
 
@@ -50,10 +49,11 @@ djelloApp.factory('boardService', ['Restangular', function(Restangular) {
     obj.addCard = function( cardObj ) {
         // console.log(cardObj)
         // console.log(lists);
-        var currentList = lists[cardObj.list_id]
+        var currentList = _lists[cardObj.list_id]
         currentList.cards.push( cardObj );
+        _cards[cardObj.id] = cardObj;
         // console.log('add list boardservice')
-        // console.log( currentBoard );
+        // console.log( _currentBoard );
         obj.createCardToDB( cardObj, currentList );
     };
 
@@ -71,29 +71,29 @@ djelloApp.factory('boardService', ['Restangular', function(Restangular) {
 
     // obj.populateBoards = function(allBoards) {
     //    for (var i = 0; i < allBoards.length; i++) { 
-    //      boards.push(allBoards[i]);
+    //      _boards.push(allBoards[i]);
     //    }  
-    //    currentBoard = allBoards[0];
+    //    _currentBoard = allBoards[0];
     // }
 
 
     obj.getCurrentBoard = function() {
-       return currentBoard;
+       return _currentBoard;
     }
 
     // obj.getIndexOfBoard = function(boardObj) {
-    //   return boards.indexOf(boardObj);
+    //   return _boards.indexOf(boardObj);
     // }
 
     obj.updateCurrentBoard = function( id ) {
-        currentBoard = boards.id;
+        _currentBoard = _boards.id;
     }
 
     // obj.refreshBoard = function(boardIndex) {
-    //   currentBoard = boards[boardIndex];
+    //   _currentBoard = _boards[boardIndex];
     //   console.log("In ref");
-    //   console.log(currentBoard);
-    //   listService.populateboardLists(currentBoard);
+    //   console.log(_currentBoard);
+    //   listService.populateboardLists(_currentBoard);
     // }
 
     obj.show = function( id ) {
@@ -109,11 +109,11 @@ djelloApp.factory('boardService', ['Restangular', function(Restangular) {
           function(response)  {
             console.log('new board obj');
             console.log(response);
-            boards.unshift(response);
+            _boards.unshift(response);
             obj.updateCurrentBoard( 0 );
             // obj.refreshBoard(0);
             console.log('all boards');
-            console.log(boards);
+            console.log(_boards);
 
         },
         function(response)  {
@@ -124,8 +124,8 @@ djelloApp.factory('boardService', ['Restangular', function(Restangular) {
     obj.destroy = function (boardObj) {
       return Restangular.one("boards", boardObj.id).remove();//.then(
     //     function(res)  {
-    //       index = boards.indexOf(boardObj);
-    //       boards.splice(index, 1);
+    //       index = _boards.indexOf(boardObj);
+    //       _boards.splice(index, 1);
     //       obj.refreshBoard(0);
     //     },
     //     function(res)  {

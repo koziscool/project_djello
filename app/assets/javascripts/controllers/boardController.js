@@ -1,63 +1,28 @@
 
-djelloApp.controller('BoardCtrl', ['boardService', '$scope', '$stateParams', '$state', function( boardService, $scope, $stateParams, $state){
+djelloApp.controller('BoardCtrl', ['dataService', '$scope', '$stateParams', '$state', function( dataService, $scope, $stateParams, $state){
 
-  // console.log('all boards');
-  // console.log(allBoards);
-
-  // console.log('current user');
-  // console.log(currentUser);
-
-  // boardService.populateBoards(allBoards);
-
-  $scope.boards = boardService.getBoards(); 
-  console.log('scope boards');
-  console.log($scope.boards);
-
-  $scope.currentBoard = boardService.getCurrentBoard();
-  console.log( 'current board')
-  console.log( $scope.currentBoard );
-  
+  $scope.boards = dataService.getBoards(); 
+  $scope.currentBoard = dataService.getCurrentBoard();
+ 
   if( $scope.currentBoard) {
-
-    // listService.populateboardLists($scope.currentBoard);
-    // $scope.lists = listService.getBoardLists();
-
     $scope.lists = $scope.currentBoard.lists
-    
-    console.log( 'current lists');
-    console.log($scope.lists);
-
-    // $scope.currentList = "";
-    // $scope.list_cards = {};
-    // $scope.board_title = "";
-    // $scope.list_title = "";
-    // $scope.list_board_id = $scope.currentBoard.id
-    // $scope.card_title = "";
-    // $scope.card_description = "";
   }
 
-  // $scope.refreshBoard = function(boardIndex) {
-  //   boardService.refreshBoard(boardIndex);
-  //   $scope.currentBoard = boardService.getCurrentBoard();
-  //   $scope.lists = listService.getBoardLists();
-  // }
 
   $scope.selectBoard = function(boardObj) {
     console.log('trying to select board')
     console.log(boardObj);
+    dataService.updateCurrentBoard( boardObj.id );
     $scope.currentBoard = boardObj;
-    boardService.updateCurrentBoard( boardObj.id );
-    // $state.go("board");
-    // $scope.refreshBoard(boardService.getIndexOfBoard(boardObj));
   }
 
   $scope.createBoard = function(boardValid) {
     var newBoard = {title: $scope.board_title, user_id: currentUser.id };
    
     if (boardValid) {
-      boardService.create(newBoard).then( function() {
+      dataService.create(newBoard).then( function() {
         console.log(' created ok');
-        $scope.currentBoard = boardService.getCurrentBoard();
+        $scope.currentBoard = dataService.getCurrentBoard();
         console.log( 'current board')
         console.log( $scope.currentBoard );
         // $scope.lists = listService.getBoardLists();
@@ -68,8 +33,8 @@ djelloApp.controller('BoardCtrl', ['boardService', '$scope', '$stateParams', '$s
   }
 
   $scope.deleteBoard = function(boardObj) {
-    boardService.destroy(boardObj).then(function () {
-      $scope.currentBoard = boardService.getCurrentBoard();
+    dataService.destroy(boardObj).then(function () {
+      $scope.currentBoard = dataService.getCurrentBoard();
       $scope.lists = $scope.currentBoard.lists;
       // $scope.lists = listService.getBoardLists();
     });
@@ -95,38 +60,15 @@ djelloApp.controller('BoardCtrl', ['boardService', '$scope', '$stateParams', '$s
                    board_id: $scope.currentBoard.id
                   };
 
-    console.log(newList);
-    console.log(listValid)
-
-    // var index = $scope.boards.indexOf($scope.currentBoard);
-
     if (listValid) {
       console.log('in if block');
-      boardService.addList( newList );
-      // Restangular.all('lists').post(newList).then(
-      //   function(response)  {
-      //     $scope.lists.push(response);
-      //     listService.addList(response);
-      //     $scope.refreshBoard(index);
-       //  },
-       //  function(response)  {
-       //     alert("Could not add your list: " + list_title);
-       // });
+      dataService.addList( newList );
     }
     $scope.list_title = "";
   }
 
   $scope.newCard = function(listObj) {
     console.log("trying to add card");
-    // boardService.addCard( );
-    // Restangular.all('users').getList().then(
-    //   function(response)  {
-    //       console.log(response);
-    //       $scope.users = response;
-    //       $scope.currentList = listObj;
-    //       $state.go("board.card");
-    //   }
-    // ); 
     $scope.currentList = listObj;
     $state.go("board.card");
 

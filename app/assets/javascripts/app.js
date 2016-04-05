@@ -20,8 +20,8 @@ djelloApp.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
           currentUser: ['Auth', function(Auth) {
           return Auth.currentUser();
           }],
-          allBoards: ['boardService', function(boardService){
-            return boardService.getIndex();
+          allBoards: ['dataService', function(dataService){
+            return dataService.getIndex();
           }]
         }
       })
