@@ -29,7 +29,7 @@ class ListsController < ApplicationController
 
 
   def update
-    @list_params = BList.find( params[:id] )
+    @list_params = List.find( params[:id] )
     if @list.update( list_params )
       respond_to do |format|
         format.json {render json: @list.to_json(include: :cards)}

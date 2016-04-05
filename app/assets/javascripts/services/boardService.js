@@ -3,7 +3,7 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
 
     var obj = {};
     var currentBoard;
-    var boards = [];
+    var boards = {};
 
     // obj.index = [];
 
@@ -13,15 +13,31 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
         }
         return Restangular.all("boards").getList().then(function(data){
           data.forEach( function(boardObj){
-            boards.push( boardObj );
+            boards[boardObj.id] = boardObj;
+            currentBoard = boardObj;
           });
-         currentBoard = boards[0];
         });
     };
 
     obj.getBoards = function() {
        return boards;
+    };
+
+    obj.getLists = function() {
+
     }
+
+    obj.addList = function( listObj ) {
+        currentBoard.lists.push( listObj );
+        // console.log('add list boardservice')
+        // console.log( currentBoard );
+        obj.createListToDB( listObj );
+    };
+
+    obj.createListToDB = function( listObj ) {
+      console.log('trying to add to db');
+      return Restangular.all("lists").post( listObj );
+    };
 
 
     // obj.populateBoards = function(allBoards) {
@@ -36,16 +52,20 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
        return currentBoard;
     }
 
-    obj.getIndexOfBoard = function(boardObj) {
-      return boards.indexOf(boardObj);
+    // obj.getIndexOfBoard = function(boardObj) {
+    //   return boards.indexOf(boardObj);
+    // }
+
+    obj.updateCurrentBoard = function( id ) {
+        currentBoard = boards.id;
     }
 
-    obj.refreshBoard = function(boardIndex) {
-      currentBoard = boards[boardIndex];
-      console.log("In ref");
-      console.log(currentBoard);
-      listService.populateboardLists(currentBoard);
-    }
+    // obj.refreshBoard = function(boardIndex) {
+    //   currentBoard = boards[boardIndex];
+    //   console.log("In ref");
+    //   console.log(currentBoard);
+    //   listService.populateboardLists(currentBoard);
+    // }
 
     obj.show = function( id ) {
       return Restangular.one( "boards", id).get();
@@ -61,7 +81,8 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
             console.log('new board obj');
             console.log(response);
             boards.unshift(response);
-            obj.refreshBoard(0);
+            obj.updateCurrentBoard( 0 );
+            // obj.refreshBoard(0);
             console.log('all boards');
             console.log(boards);
 
@@ -72,16 +93,16 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
     };
 
     obj.destroy = function (boardObj) {
-      return Restangular.one("boards/" + boardObj.id).remove().then(
-        function(res)  {
-          index = boards.indexOf(boardObj);
-          boards.splice(index, 1);
-          obj.refreshBoard(0);
-        },
-        function(res)  {
-          alert("Could not delete your board: " + boardObj.title);
-      }      
-    )
+      return Restangular.one("boards", boardObj.id).remove();//.then(
+    //     function(res)  {
+    //       index = boards.indexOf(boardObj);
+    //       boards.splice(index, 1);
+    //       obj.refreshBoard(0);
+    //     },
+    //     function(res)  {
+    //       alert("Could not delete your board: " + boardObj.title);
+    //   }      
+    // )
     };
 
     return obj;
