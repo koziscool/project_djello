@@ -9,5 +9,8 @@ djelloApp.directive('showList', [ function() {
       newCard: '&',
     },
     templateUrl: 'templates/directives/listLayout.html'
+    link: function( scope ) {
+      
+    }
   };
 }]);

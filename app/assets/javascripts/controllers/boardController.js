@@ -45,7 +45,9 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
   $scope.selectBoard = function(boardObj) {
     console.log('trying to select board')
     console.log(boardObj);
-    boardService.updateCurrentBoard( boardObj.id )
+    $scope.currentBoard = boardObj;
+    boardService.updateCurrentBoard( boardObj.id );
+    // $state.go("board");
     // $scope.refreshBoard(boardService.getIndexOfBoard(boardObj));
   }
 
@@ -114,13 +116,17 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
   $scope.newCard = function(listObj) {
     console.log("trying to add card");
     // boardService.addCard( );
-    Restangular.all('users').getList().then(
-      function(response)  {
-          $scope.users = response;
-          $scope.currentList = listObj;
-          $state.go("board.card");
-      }
-    ); 
+    // Restangular.all('users').getList().then(
+    //   function(response)  {
+    //       console.log(response);
+    //       $scope.users = response;
+    //       $scope.currentList = listObj;
+    //       $state.go("board.card");
+    //   }
+    // ); 
+    $scope.currentList = listObj;
+    $state.go("board.card");
+
   }
 
   $scope.removeCard = function(cardObj) {

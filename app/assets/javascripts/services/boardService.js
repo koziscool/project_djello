@@ -4,6 +4,8 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
     var obj = {};
     var currentBoard;
     var boards = {};
+    var lists = {};
+    var cards = {};
 
     // obj.index = [];
 
@@ -11,10 +13,17 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
         if (boards.length){
           return boards;
         }
-        return Restangular.all("boards").getList().then(function(data){
-          data.forEach( function(boardObj){
+        return Restangular.all("boards").getList().then(function(boardData){
+          boardData.forEach( function(boardObj){
             boards[boardObj.id] = boardObj;
             currentBoard = boardObj;
+
+            boardObj.lists.forEach( function(list){
+              lists[list.id] = list;
+                list.cards.forEach( function(card){
+                  cards[card.id] = card;
+                });
+            });
           });
         });
     };
@@ -24,7 +33,6 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
     };
 
     obj.getLists = function() {
-
     }
 
     obj.addList = function( listObj ) {
@@ -37,6 +45,27 @@ djelloApp.factory('boardService', ['Restangular', 'listService', function(Restan
     obj.createListToDB = function( listObj ) {
       console.log('trying to add to db');
       return Restangular.all("lists").post( listObj );
+    };
+
+    obj.addCard = function( cardObj ) {
+        // console.log(cardObj)
+        // console.log(lists);
+        var currentList = lists[cardObj.list_id]
+        currentList.cards.push( cardObj );
+        // console.log('add list boardservice')
+        // console.log( currentBoard );
+        obj.createCardToDB( cardObj, currentList );
+    };
+
+    obj.createCardToDB = function( cardObj, currentList ) {
+      console.log('trying to add to db');
+      return Restangular.all("cards").post( cardObj ).then(
+        function(response)  {
+          console.log("Card was added")
+        },
+        function(response)  {
+           alert("Could not add your card: " + cardObj.title + " to the list " + currentList.title);
+       });
     };
 
 

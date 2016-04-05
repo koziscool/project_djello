@@ -25,6 +25,11 @@ djelloApp.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
           }]
         }
       })
+      
+      .state('board.showLists', {
+        url: '/:id',
+      })
+
       .state('board.card', {
         url: '/card',
         templateUrl: '/templates/cardModalLayout.html',
