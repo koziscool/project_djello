@@ -20,9 +20,7 @@ djelloApp.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
           currentUser: ['Auth', function(Auth) {
           return Auth.currentUser();
           }],
-          allBoards: ['dataService', function(dataService){
-            return dataService.getIndex();
-          }]
+
         }
       })
       
@@ -37,11 +35,6 @@ djelloApp.config(['$urlRouterProvider', '$stateProvider', 'RestangularProvider',
         params: {
           list: null
         },
-        // resolve: {
-        //   allCards: ['Restangular', function(Restangular){
-        //     return Restangular.all('cardmembers').getList();
-        //   }]
-        // }
       })
      $urlRouterProvider.otherwise('/board');
 

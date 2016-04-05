@@ -21,9 +21,4 @@ djelloApp.controller('CardCtrl', ['dataService', '$scope', '$stateParams', funct
     $scope.list_title = "";
   }
 
-  // $scope.removeCard = function(cardObj) {
-  //   console.log("Here");
-  //   dataService.deleteCard(cardObj);
-  // };
-
 }]);
