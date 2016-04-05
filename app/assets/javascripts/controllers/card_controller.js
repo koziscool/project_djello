@@ -17,13 +17,6 @@ djelloApp.controller('CardCtrl', ['dataService', '$scope', '$stateParams', funct
       }
       dataService.addCard( newCard );
       console.log( newCard);
-      // Restangular.all('cards').post(newCard).then(
-      //   function(response)  {
-      //     console.log("Card was added")
-      //   },
-      //   function(response)  {
-      //      alert("Could not add your card: " + $scope.card_title + " to the list " + $scope.currentList.title);
-      //  });
     }
     $scope.list_title = "";
   }

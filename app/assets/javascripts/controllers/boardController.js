@@ -1,12 +1,8 @@
 
-djelloApp.controller('BoardCtrl', ['dataService', '$scope', '$stateParams', '$state', function( dataService, $scope, $stateParams, $state){
+djelloApp.controller('BoardCtrl', ['dataService', '$scope', '$stateParams', '$state', 'currentUser', function( dataService, $scope, $stateParams, $state, currentUser ){
 
   $scope.boards = dataService.getBoards(); 
   $scope.currentBoard = dataService.getCurrentBoard();
- 
-  if( $scope.currentBoard) {
-    $scope.lists = $scope.currentBoard.lists
-  }
 
 
   $scope.selectBoard = function(boardObj) {
@@ -20,23 +16,18 @@ djelloApp.controller('BoardCtrl', ['dataService', '$scope', '$stateParams', '$st
     var newBoard = {title: $scope.board_title, user_id: currentUser.id };
    
     if (boardValid) {
-      dataService.create(newBoard).then( function() {
-        console.log(' created ok');
+      dataService.addBoard( newBoard ).then( function() {
+        console.log('created ok');
         $scope.currentBoard = dataService.getCurrentBoard();
         console.log( 'current board')
         console.log( $scope.currentBoard );
-        // $scope.lists = listService.getBoardLists();
-        $scope.lists = $scope.currentBoard.lists;
-
       });  
     }
   }
 
   $scope.deleteBoard = function(boardObj) {
-    dataService.destroy(boardObj).then(function () {
+    dataService.deleteBoard(boardObj).then(function () {
       $scope.currentBoard = dataService.getCurrentBoard();
-      $scope.lists = $scope.currentBoard.lists;
-      // $scope.lists = listService.getBoardLists();
     });
   }
 
@@ -54,7 +45,6 @@ djelloApp.controller('BoardCtrl', ['dataService', '$scope', '$stateParams', '$st
   }
 
   $scope.addList = function( listValid ) {
-
     console.log('adding list');
     var newList = {title: $scope.list_title, 
                    board_id: $scope.currentBoard.id
@@ -71,7 +61,6 @@ djelloApp.controller('BoardCtrl', ['dataService', '$scope', '$stateParams', '$st
     console.log("trying to add card");
     $scope.currentList = listObj;
     $state.go("board.card");
-
   }
 
   $scope.removeCard = function(cardObj) {

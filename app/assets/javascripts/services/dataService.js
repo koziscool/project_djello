@@ -34,26 +34,24 @@ djelloApp.factory('dataService', ['Restangular', function(Restangular) {
     }
 
     obj.addList = function( listObj ) {
-        _currentBoard.lists.push( listObj );
-        _lists[listObj.id] = listObj;
-        // console.log('add list boardservice')
-        // console.log( _currentBoard );
-        obj.createListToDB( listObj );
-    };
-
-    obj.createListToDB = function( listObj ) {
       console.log('trying to add to db');
-      return Restangular.all("lists").post( listObj );
+      return Restangular.all("lists").post( listObj ).then(
+          function(response)  {
+            listObj.cards = [];
+            listObj.id = response.id;
+            console.log(listObj);
+            _currentBoard.lists.push( listObj );
+            _lists[listObj.id] = listObj;
+        },
+        function(response)  {
+          alert("Could not add your list: " + listObj.title);
+       });;
     };
 
     obj.addCard = function( cardObj ) {
-        // console.log(cardObj)
-        // console.log(lists);
         var currentList = _lists[cardObj.list_id]
         currentList.cards.push( cardObj );
         _cards[cardObj.id] = cardObj;
-        // console.log('add list boardservice')
-        // console.log( _currentBoard );
         obj.createCardToDB( cardObj, currentList );
     };
 
@@ -68,33 +66,13 @@ djelloApp.factory('dataService', ['Restangular', function(Restangular) {
        });
     };
 
-
-    // obj.populateBoards = function(allBoards) {
-    //    for (var i = 0; i < allBoards.length; i++) { 
-    //      _boards.push(allBoards[i]);
-    //    }  
-    //    _currentBoard = allBoards[0];
-    // }
-
-
     obj.getCurrentBoard = function() {
        return _currentBoard;
     }
 
-    // obj.getIndexOfBoard = function(boardObj) {
-    //   return _boards.indexOf(boardObj);
-    // }
-
     obj.updateCurrentBoard = function( id ) {
-        _currentBoard = _boards.id;
+        _currentBoard = _boards[id];
     }
-
-    // obj.refreshBoard = function(boardIndex) {
-    //   _currentBoard = _boards[boardIndex];
-    //   console.log("In ref");
-    //   console.log(_currentBoard);
-    //   listService.populateboardLists(_currentBoard);
-    // }
 
     obj.show = function( id ) {
       return Restangular.one( "boards", id).get();
@@ -104,34 +82,37 @@ djelloApp.factory('dataService', ['Restangular', function(Restangular) {
       boardObj.put();
     };
 
-    obj.create = function ( boardObj ) {
+    obj.addBoard = function ( boardObj ) {
         return Restangular.all('boards').post(boardObj).then(
           function(response)  {
-            console.log('new board obj');
-            console.log(response);
-            _boards.unshift(response);
-            obj.updateCurrentBoard( 0 );
-            // obj.refreshBoard(0);
-            console.log('all boards');
-            console.log(_boards);
+            boardObj.id = response.id;
+            boardObj.created_at = response.created_at;
+            boardObj.updated_at = response.updated_at;
+            boardObj.lists = [];
+            _boards[response.id] = boardObj;
 
+            obj.updateCurrentBoard( boardObj.id );
         },
         function(response)  {
           alert("Could not add your board: " + boardObj.title);
        });
     };
 
-    obj.destroy = function (boardObj) {
-      return Restangular.one("boards", boardObj.id).remove();//.then(
-    //     function(res)  {
-    //       index = _boards.indexOf(boardObj);
-    //       _boards.splice(index, 1);
-    //       obj.refreshBoard(0);
-    //     },
-    //     function(res)  {
-    //       alert("Could not delete your board: " + boardObj.title);
-    //   }      
-    // )
+    obj.deleteBoard = function (boardObj) {
+      delete _boards[boardObj.id];
+      if( _currentBoard.id === boardObj.id){
+        console.log('changing currentBoard');
+        var keys = Object.keys( _boards );
+        _currentBoard = _boards[keys[0]];
+      }
+      return Restangular.one("boards", boardObj.id).remove().then(
+        function(response)  {
+            console.log('deleted board ok')
+        },
+        function(res)  {
+          alert("Could not delete your board: " + boardObj.title);
+        }      
+      );
     };
 
     return obj;
