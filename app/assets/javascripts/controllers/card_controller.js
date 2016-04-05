@@ -1,4 +1,4 @@
-djelloApp.controller('CardCtrl', ['boardService', 'listService', '$scope', '$stateParams', 'Restangular' , function( boardService, listService, $scope, $stateParams, Restangular){
+djelloApp.controller('CardCtrl', ['boardService', '$scope', '$stateParams', function( boardService, $scope, $stateParams){
 
   $scope.card_title = "";
   $scope.card_description = "";

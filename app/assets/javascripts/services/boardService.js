@@ -1,5 +1,5 @@
 
-djelloApp.factory('boardService', ['Restangular', 'listService', function(Restangular,listService) {
+djelloApp.factory('boardService', ['Restangular', function(Restangular) {
 
     var obj = {};
     var currentBoard;

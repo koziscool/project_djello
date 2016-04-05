@@ -1,11 +1,11 @@
 
-djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listService', '$scope', '$stateParams', '$state', 'allBoards', 'currentUser', function( Restangular, Auth, boardService, listService, $scope, $stateParams, $state, allBoards, currentUser){
+djelloApp.controller('BoardCtrl', ['boardService', '$scope', '$stateParams', '$state', function( boardService, $scope, $stateParams, $state){
 
   // console.log('all boards');
   // console.log(allBoards);
 
-  console.log('current user');
-  console.log(currentUser);
+  // console.log('current user');
+  // console.log(currentUser);
 
   // boardService.populateBoards(allBoards);
 
@@ -60,7 +60,9 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
         $scope.currentBoard = boardService.getCurrentBoard();
         console.log( 'current board')
         console.log( $scope.currentBoard );
-        $scope.lists = listService.getBoardLists();
+        // $scope.lists = listService.getBoardLists();
+        $scope.lists = $scope.currentBoard.lists;
+
       });  
     }
   }
@@ -68,7 +70,8 @@ djelloApp.controller('BoardCtrl', ['Restangular', 'Auth', 'boardService', 'listS
   $scope.deleteBoard = function(boardObj) {
     boardService.destroy(boardObj).then(function () {
       $scope.currentBoard = boardService.getCurrentBoard();
-      $scope.lists = listService.getBoardLists();
+      $scope.lists = $scope.currentBoard.lists;
+      // $scope.lists = listService.getBoardLists();
     });
   }
 
